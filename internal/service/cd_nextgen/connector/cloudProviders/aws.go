@@ -58,16 +58,22 @@ func ResourceConnectorAws() *schema.Resource {
 							Type:        schema.TypeString,
 							Required:    true,
 						},
-                        "session_token_ref": {
-                            Description: "Reference to the Harness secret containing the aws session token." + secret_ref_text,
-                            Type:        schema.TypeString,
-                            Optional:    true,
-                        },
+						"session_token_ref": {
+							Description: "Reference to the Harness secret containing the aws session token." + secret_ref_text,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"delegate_selectors": {
 							Description: "Connect only use delegates with these tags.",
 							Type:        schema.TypeSet,
 							Optional:    true,
 							Elem:        &schema.Schema{Type: schema.TypeString},
+						},
+						"execute_on_delegate": {
+							Description: "Execute on delegate or not.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Default:     true,
 						},
 						"region": {
 							Description: "Test Region to perform Connection test of AWS Connector" + secret_ref_text,
@@ -169,6 +175,12 @@ func ResourceConnectorAws() *schema.Resource {
 							Type:        schema.TypeSet,
 							Required:    true,
 							Elem:        &schema.Schema{Type: schema.TypeString},
+						},
+						"execute_on_delegate": {
+							Description: "Execute on delegate or not.",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Default:     true,
 						},
 						"region": {
 							Description: "Test Region to perform Connection test of AWS Connector." + secret_ref_text,
@@ -351,12 +363,16 @@ func buildConnectorAws(d *schema.ResourceData) *nextgen.ConnectorInfo {
 			connector.Aws.Credential.ManualConfig.SecretKeyRef = attr
 		}
 
-        if attr := config["session_token_ref"].(string); attr != "" {
-            connector.Aws.Credential.ManualConfig.SessionTokenRef = attr
-        }
+		if attr := config["session_token_ref"].(string); attr != "" {
+			connector.Aws.Credential.ManualConfig.SessionTokenRef = attr
+		}
 
 		if attr := config["delegate_selectors"].(*schema.Set).List(); len(attr) > 0 {
 			connector.Aws.DelegateSelectors = utils.InterfaceSliceToStringSlice(attr)
+		}
+
+		if attr, ok := d.GetOk("execute_on_delegate"); ok {
+			connector.Aws.ExecuteOnDelegate = attr.(bool)
 		}
 
 		if attr := config["region"].(string); attr != "" {
@@ -401,6 +417,10 @@ func buildConnectorAws(d *schema.ResourceData) *nextgen.ConnectorInfo {
 
 		if attr := config["delegate_selectors"].(*schema.Set).List(); len(attr) > 0 {
 			connector.Aws.DelegateSelectors = utils.InterfaceSliceToStringSlice(attr)
+		}
+
+		if attr, ok := d.GetOk("execute_on_delegate"); ok {
+			connector.Aws.ExecuteOnDelegate = attr.(bool)
 		}
 
 		if attr := config["region"].(string); attr != "" {
@@ -473,16 +493,19 @@ func buildConnectorAws(d *schema.ResourceData) *nextgen.ConnectorInfo {
 }
 
 func readConnectorAws(d *schema.ResourceData, connector *nextgen.ConnectorInfo) error {
+
+	d.Set("execute_on_delegate", connector.Aws.ExecuteOnDelegate)
 	switch connector.Aws.Credential.Type_ {
 	case nextgen.AwsAuthTypes.ManualConfig:
 		d.Set("manual", []map[string]interface{}{
 			{
-				"access_key":         connector.Aws.Credential.ManualConfig.AccessKey,
-				"access_key_ref":     connector.Aws.Credential.ManualConfig.AccessKeyRef,
-				"secret_key_ref":     connector.Aws.Credential.ManualConfig.SecretKeyRef,
-				"session_token_ref":  connector.Aws.Credential.ManualConfig.SessionTokenRef,
-				"delegate_selectors": connector.Aws.DelegateSelectors,
-				"region":             connector.Aws.Credential.Region,
+				"access_key":          connector.Aws.Credential.ManualConfig.AccessKey,
+				"access_key_ref":      connector.Aws.Credential.ManualConfig.AccessKeyRef,
+				"secret_key_ref":      connector.Aws.Credential.ManualConfig.SecretKeyRef,
+				"session_token_ref":   connector.Aws.Credential.ManualConfig.SessionTokenRef,
+				"delegate_selectors":  connector.Aws.DelegateSelectors,
+				"execute_on_delegate": connector.Aws.ExecuteOnDelegate,
+				"region":              connector.Aws.Credential.Region,
 			},
 		})
 	case nextgen.AwsAuthTypes.Irsa:
@@ -502,9 +525,10 @@ func readConnectorAws(d *schema.ResourceData, connector *nextgen.ConnectorInfo) 
 	case nextgen.AwsAuthTypes.OidcAuthentication:
 		d.Set("oidc_authentication", []map[string]interface{}{
 			{
-				"iam_role_arn":       connector.Aws.Credential.OidcConfig.IamRoleArn,
-				"delegate_selectors": connector.Aws.DelegateSelectors,
-				"region":             connector.Aws.Credential.Region,
+				"iam_role_arn":        connector.Aws.Credential.OidcConfig.IamRoleArn,
+				"delegate_selectors":  connector.Aws.DelegateSelectors,
+				"execute_on_delegate": connector.Aws.ExecuteOnDelegate,
+				"region":              connector.Aws.Credential.Region,
 			},
 		})
 	default:
