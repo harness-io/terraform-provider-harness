@@ -904,7 +904,7 @@ func testAccResourceConnectorVault_aws_auth(id string, name string, vault_secret
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds]
 	}
 
@@ -975,7 +975,7 @@ func testProjectResourceConnectorVault_aws_auth(id string, name string, vault_se
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds_2]
 	}
 
@@ -1037,7 +1037,7 @@ func testOrgResourceConnectorVault_aws_auth(id string, name string, vault_secret
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds_2]
 	}
 
@@ -1088,7 +1088,7 @@ func testAccResourceConnectorVault_app_role(id string, name string, vault_secret
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_4_seconds]
 	}
 	`, id, name, vault_secret)
@@ -1152,7 +1152,7 @@ func testProjectResourceConnectorVault_app_role(id string, name string, vault_se
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds_2]
 	}
 
@@ -1213,7 +1213,7 @@ func testOrgResourceConnectorVault_app_role(id string, name string, vault_secret
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds_2]
 	}
 
@@ -1262,7 +1262,7 @@ func testAccResourceConnectorVault_k8s_auth(id string, name string) string {
 		vault_aws_iam_role = "vault_aws_iam_role"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds]
 	}
 
@@ -1353,7 +1353,7 @@ func testProjectResourceConnectorVault_k8s_auth(id string, name string, connecto
 		vault_aws_iam_role = "vault_aws_iam_role"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds_3]
 	}
 
@@ -1432,7 +1432,7 @@ func testOrgResourceConnectorVault_k8s_auth(id string, name string, connectorNam
 		vault_aws_iam_role = "vault_aws_iam_role"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds_3]
 	}
 
@@ -1478,7 +1478,7 @@ func testAccResourceConnectorVault_vault_agent(id string, name string) string {
 		sink_path = "sink_path"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds]
 	}
 
@@ -1567,7 +1567,7 @@ func testProjectResourceConnectorVault_vault_agent(id string, name string, conne
 		sink_path = "sink_path"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds_3]
 	}
 
@@ -1644,7 +1644,7 @@ func testOrgResourceConnectorVault_vault_agent(id string, name string, connector
 		sink_path = "sink_path"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds_3]
 	}
 
@@ -1686,7 +1686,7 @@ func testAccResourceConnectorVault_token(id string, name string, vaultToken stri
 		use_aws_iam = false
 		use_k8s_auth = false
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds]
 	}
 
@@ -1747,7 +1747,7 @@ func testProjectResourceConnectorVault_token(id string, name string, vaultToken 
 		use_aws_iam = false
 		use_k8s_auth = false
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds_2]
 	}
 
@@ -1798,7 +1798,7 @@ func testOrgResourceConnectorVault_token(id string, name string, vaultToken stri
 		use_aws_iam = false
 		use_k8s_auth = false
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_8_seconds_2]
 	}
 

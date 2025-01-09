@@ -516,6 +516,7 @@ func testAccDataSourceConnectorVault(name string, vaultToken string) string {
 		use_aws_iam = false
 		use_k8s_auth = false
 		vault_url = "https://vaultqa.harness.io"
+		use_jwt_auth = false
 
 		depends_on = [time_sleep.wait_4_seconds]
 	}
@@ -582,6 +583,7 @@ func testAccDataSourceConnectorVaultProjectLevel(name string, vaultToken string)
 		use_aws_iam = false
 		use_k8s_auth = false
 		vault_url = "https://vaultqa.harness.io"
+		use_jwt_auth = false
 
 		depends_on = [time_sleep.wait_4_seconds]
 	}
@@ -639,7 +641,7 @@ func testAccDataSourceConnectorVaultOrgLevel(name string, vaultToken string) str
 		use_aws_iam = false
 		use_k8s_auth = false
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_4_seconds]
 	}
 
@@ -690,7 +692,7 @@ func testAccDataSourceConnectorVault_VaultAgent(name string) string {
 		sink_path = "sink_path"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_4_seconds]
 	}
 
@@ -783,7 +785,7 @@ func testAccDataSourceConnectorVault_VaultAgentProjectLevel(name string, connect
 		sink_path = "sink_path"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_4_seconds]
 	}
 
@@ -866,7 +868,7 @@ func testAccDataSourceConnectorVault_VaultAgentOrgLevel(name string, connectorNa
 		sink_path = "sink_path"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_4_seconds]
 	}
 
@@ -920,7 +922,7 @@ func testAccDataSourceConnectorVault_k8sAuth(name string) string {
 		vault_aws_iam_role = "vault_aws_iam_role"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_4_seconds]
 	}
 
@@ -1015,7 +1017,7 @@ func testAccDataSourceConnectorVault_k8sAuthProjectLevel(name string, connectorN
 		vault_aws_iam_role = "vault_aws_iam_role"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_4_seconds]
 	}
 
@@ -1100,7 +1102,7 @@ func testAccDataSourceConnectorVault_k8sAuthOrgLevel(name string, connectorName 
 		vault_aws_iam_role = "vault_aws_iam_role"
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vault_url.com"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_5_seconds]
 	}
 
@@ -1150,7 +1152,7 @@ func testAccDataSourceConnectorVault_AppRole(name string, vaultToken string) str
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_4_seconds]
 	}
 
@@ -1229,7 +1231,7 @@ func testAccDataSourceConnectorVault_AppRoleProjectLevel(name string, vaultToken
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_3_seconds]
 	}
 
@@ -1297,7 +1299,7 @@ func testAccDataSourceConnectorVault_AppRoleOrgLevel(name string, vaultToken str
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_3_seconds]
 	}
 
@@ -1354,7 +1356,7 @@ func testAccDataSourceConnectorVault_AWSAuth(name string, vaultToken string) str
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_4_seconds]
 	}
 
@@ -1423,7 +1425,7 @@ func testAccDataSourceConnectorVault_AWSAuthProjectLevel(name string, vaultToken
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_4_seconds]
 	}
 
@@ -1485,7 +1487,7 @@ func testAccDataSourceConnectorVault_AWSAuthOrgLevel(name string, vaultToken str
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
-
+		use_jwt_auth = false
 		depends_on = [time_sleep.wait_4_seconds]
 	}
 

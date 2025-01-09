@@ -93,6 +93,11 @@ func ResourceConnectorVault() *schema.Resource {
 				Type:        schema.TypeBool,
 				Optional:    true,
 			},
+			"use_jwt_auth": {
+				Description: "Boolean value to indicate if JWT is used for authentication.",
+				Type:        schema.TypeBool,
+				Optional:    true,
+			},
 			"sink_path": {
 				Description: "The location from which the authentication token should be read.",
 				Type:        schema.TypeString,
@@ -115,6 +120,16 @@ func ResourceConnectorVault() *schema.Resource {
 			},
 			"vault_aws_iam_role": {
 				Description: "The Vault role defined to bind to aws iam account/role being accessed.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"vault_jwt_auth_role": {
+				Description: "The Vault role defined with JWT auth type for accessing Vault as per policies binded.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"vault_jwt_auth_path": {
+				Description: "Custom path at with JWT auth in enabled for Vault",
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -285,6 +300,10 @@ func buildConnectorVault(d *schema.ResourceData) *nextgen.ConnectorInfo {
 		connector.Vault.UseK8sAuth = attr.(bool)
 	}
 
+	if attr, ok := d.GetOk("use_jwt_auth"); ok {
+		connector.Vault.UseJwtAuth = attr.(bool)
+	}
+
 	if attr, ok := d.GetOk("vault_k8s_auth_role"); ok {
 		connector.Vault.VaultK8sAuthRole = attr.(string)
 	}
@@ -337,6 +356,7 @@ func readConnectorVault(d *schema.ResourceData, connector *nextgen.ConnectorInfo
 	d.Set("vault_aws_iam_role", connector.Vault.VaultAwsIamRole)
 	d.Set("xvault_aws_iam_server_id", connector.Vault.XvaultAwsIamServerId)
 	d.Set("use_k8s_auth", connector.Vault.UseK8sAuth)
+	d.Set("use_jwt_auth", connector.Vault.UseJwtAuth)
 	d.Set("vault_k8s_auth_role", connector.Vault.VaultK8sAuthRole)
 	d.Set("service_account_token_path", connector.Vault.ServiceAccountTokenPath)
 	d.Set("k8s_auth_endpoint", connector.Vault.K8sAuthEndpoint)

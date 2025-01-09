@@ -97,6 +97,11 @@ func DataSourceConnectorVault() *schema.Resource {
 				Type:        schema.TypeBool,
 				Computed:    true,
 			},
+			"use_jwt_auth": {
+				Description: "Boolean value to indicate if JWT is used for authentication.",
+				Type:        schema.TypeBool,
+				Computed:    true,
+			},
 			"aws_region": {
 				Description: "The AWS region where AWS IAM auth will happen.",
 				Type:        schema.TypeString,
@@ -104,6 +109,16 @@ func DataSourceConnectorVault() *schema.Resource {
 			},
 			"vault_aws_iam_role": {
 				Description: "The Vault role defined to bind to AWS IAM account/role being accessed.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
+			"vault_jwt_auth_role": {
+				Description: "The Vault role defined with JWT auth type for accessing Vault as per policies binded.",
+				Type:        schema.TypeString,
+				Computed:    true,
+			},
+			"vault_jwt_auth_path": {
+				Description: "Custom path at with JWT auth in enabled for Vault",
 				Type:        schema.TypeString,
 				Computed:    true,
 			},
