@@ -26,6 +26,16 @@ func DatasourceConnectorAwsSM() *schema.Resource {
 				Type:        schema.TypeBool,
 				Computed:    true,
 			},
+			"force_delete_without_recovery": {
+            	Description: "Whether to force delete secret value or not.",
+            	Type:        schema.TypeBool,
+            	Optional:    true,
+            },
+            "recovery_window_in_days": {
+            	Description: "Recovery duration in days in AWS Secrets Manager.",
+            	Type:        schema.TypeInt,
+            	Optional:    true,
+            },
 			"delegate_selectors": {
 				Description: "Tags to filter delegates for connection.",
 				Type:        schema.TypeSet,
