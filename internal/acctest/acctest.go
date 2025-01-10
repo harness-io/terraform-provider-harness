@@ -9,6 +9,7 @@ import (
 	"github.com/harness/harness-go-sdk/harness/cd/graphql"
 	"github.com/harness/harness-go-sdk/harness/code"
 	"github.com/harness/harness-go-sdk/harness/dbops"
+	"github.com/harness/harness-go-sdk/harness/har"
 	"github.com/harness/harness-go-sdk/harness/helpers"
 	"github.com/harness/harness-go-sdk/harness/nextgen"
 	"github.com/harness/harness-go-sdk/harness/policymgmt"
@@ -79,6 +80,10 @@ func TestAccGetPolicyManagementClient() *policymgmt.APIClient {
 
 func TestAccGetCodeClientWithContext() (*code.APIClient, context.Context) {
 	return TestAccProvider.Meta().(*internal.Session).GetCodeClientWithContext(context.Background())
+}
+
+func TestAccGetHarClientWithContext() (*har.APIClient, context.Context) {
+	return TestAccProvider.Meta().(*internal.Session).GetHarClientWithContext(context.Background())
 }
 
 func TestAccGetApplication(resourceName string, state *terraform.State) (*graphql.Application, error) {
