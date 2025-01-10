@@ -3,11 +3,13 @@ package provider
 import (
 	"context"
 	"fmt"
+	"github.com/harness/harness-go-sdk/harness/har"
 	"log"
 
 	"github.com/harness/harness-go-sdk/harness/chaos"
 	cdng_service "github.com/harness/terraform-provider-harness/internal/service/cd_nextgen/service"
 	"github.com/harness/terraform-provider-harness/internal/service/chaos/infrastructure"
+	har_registry "github.com/harness/terraform-provider-harness/internal/service/har/registry"
 	"github.com/harness/terraform-provider-harness/internal/service/platform/module_registry"
 	"github.com/harness/terraform-provider-harness/internal/service/platform/service_account"
 
@@ -300,6 +302,7 @@ func Provider(version string) func() *schema.Provider {
 				"harness_cluster_orchestrator":                     cluster_orchestrator.DataSourceClusterOrchestrator(),
 				"harness_platform_infra_module":                    module_registry.DataSourceInfraModule(),
 				"harness_chaos_infrastructure":                     infrastructure.DataSourceChaosInfrastructureService(),
+				"harness_platform_har_registry": 					har_registry.DataSourceRegistry(),
 			},
 			ResourcesMap: map[string]*schema.Resource{
 				"harness_platform_template":                        pipeline_template.ResourceTemplate(),
@@ -450,6 +453,7 @@ func Provider(version string) func() *schema.Provider {
 				"harness_cluster_orchestrator":                     cluster_orchestrator.ResourceClusterOrchestrator(),
 				"harness_platform_infra_module":                    module_registry.ResourceInfraModule(),
 				"harness_chaos_infrastructure":                     infrastructure.ResourceChaosInfrastructure(),
+				"harness_platform_har_registry": 					har_registry.ResourceRegistry(),
 			},
 		}
 
@@ -555,6 +559,20 @@ func getChaosClient(d *schema.ResourceData, version string) *chaos.APIClient {
 	return client
 }
 
+func getHarClient(d *schema.ResourceData, version string) *har.APIClient {
+	cfg := har.NewConfiguration()
+	client := har.NewAPIClient(&har.Configuration{
+		AccountId:     d.Get("account_id").(string),
+		BasePath:      d.Get("endpoint").(string) + "/har/api/v1",
+		ApiKey:        d.Get("platform_api_key").(string),
+		UserAgent:     fmt.Sprintf("terraform-provider-harness-platform-%s", version),
+		HTTPClient:    getOpenApiHttpClient(cfg.Logger),
+		DefaultHeader: map[string]string{"X-Api-Key": d.Get("platform_api_key").(string)},
+		DebugLogging:  openapi_client_logging.IsDebugOrHigher(cfg.Logger),
+	})
+	return client
+}
+
 // Setup the client for interacting with the Harness API
 func configure(version string, p *schema.Provider) func(context.Context, *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	return func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
@@ -567,6 +585,7 @@ func configure(version string, p *schema.Provider) func(context.Context, *schema
 			CodeClient:  getCodeClient(d, version),
 			DBOpsClient: getDBOpsClient(d, version),
 			ChaosClient: getChaosClient(d, version),
+			HARClient:   getHarClient(d, version),
 		}, nil
 	}
 }
