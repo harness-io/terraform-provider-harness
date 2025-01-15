@@ -94,6 +94,12 @@ func ResourcePipeline() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
+						"is_harness_code_repo": {
+							Description: "If the repo is harness code",
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
+						},
 					},
 				},
 			},
@@ -372,6 +378,9 @@ func buildCreatePipeline(d *schema.ResourceData) nextgen.PipelineCreateRequestBo
 		if attr, ok := config["repo_name"]; ok {
 			pipeline.GitDetails.RepoName = attr.(string)
 		}
+		if attr, ok := config["is_harness_code_repo"]; ok {
+			pipeline.GitDetails.IsHarnessCodeRepo = attr.(bool)
+		}
 	}
 	return pipeline
 }
@@ -406,6 +415,9 @@ func buildUpdatePipeline(d *schema.ResourceData) nextgen.PipelineUpdateRequestBo
 			}
 			if attr, ok := config["last_commit_id"]; ok {
 				pipeline.GitDetails.LastCommitId = attr.(string)
+			}
+			if attr, ok := config["is_harness_code_repo"]; ok {
+				pipeline.GitDetails.IsHarnessCodeRepo = attr.(bool)
 			}
 		}
 	}

@@ -101,7 +101,7 @@ func ResourceService() *schema.Resource {
 							Computed:    true,
 						},
 						"is_harness_code_repo": {
-							Description: "If the repo is in harness code",
+							Description: "If the repo is harness code",
 							Type:        schema.TypeBool,
 							Optional:    true,
 							Computed:    true,
