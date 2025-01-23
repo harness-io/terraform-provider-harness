@@ -166,6 +166,7 @@ resource "harness_platform_connector_vault" "jwt" {
   use_jwt_auth                      = true
   vault_jwt_auth_role               = "vault_jwt_auth_role"
   vault_jwt_auth_path               = "vault_jwt_auth_path"
+  execute_on_delegate               = false
 }
 ```
 
@@ -213,6 +214,7 @@ resource "harness_platform_connector_vault" "jwt" {
 - `use_jwt_auth` (Boolean) Boolean value to indicate if JWT is used for authentication.
 - `vault_jwt_auth_role` (String) The Vault role defined with JWT auth type for accessing Vault as per policies binded.
 - `vault_jwt_auth_path` (String) Custom path at with JWT auth in enabled for Vault.
+- `execute_on_delegate` (Boolean) Execute on delegate or not.
 
 ### Read-Only
 

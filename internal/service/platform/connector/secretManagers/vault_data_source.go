@@ -122,6 +122,11 @@ func DataSourceConnectorVault() *schema.Resource {
 				Type:        schema.TypeString,
 				Computed:    true,
 			},
+			"execute_on_delegate": {
+				Description: "Execute on delegate or not.",
+				Type:        schema.TypeBool,
+				Computed:    true,
+			},
 			"xvault_aws_iam_server_id": {
 				Description: "The AWS IAM Header Server ID that has been configured for this AWS IAM instance.",
 				Type:        schema.TypeString,

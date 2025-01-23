@@ -178,7 +178,8 @@ func ResourceConnectorVault() *schema.Resource {
 			"execute_on_delegate": {
 				Description: "Execute on delegate or not.",
 				Type:        schema.TypeBool,
-				Computed:    true,
+				Optional:    true,
+				Default:     true,
 			},
 		},
 	}
@@ -374,6 +375,7 @@ func readConnectorVault(d *schema.ResourceData, connector *nextgen.ConnectorInfo
 	d.Set("xvault_aws_iam_server_id", connector.Vault.XvaultAwsIamServerId)
 	d.Set("use_k8s_auth", connector.Vault.UseK8sAuth)
 	d.Set("use_jwt_auth", connector.Vault.UseJwtAuth)
+	d.Set("execute_on_delegate", connector.Vault.ExecuteOnDelegate)
 	d.Set("vault_k8s_auth_role", connector.Vault.VaultK8sAuthRole)
 	d.Set("service_account_token_path", connector.Vault.ServiceAccountTokenPath)
 	d.Set("k8s_auth_endpoint", connector.Vault.K8sAuthEndpoint)
