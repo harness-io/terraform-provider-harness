@@ -6,7 +6,7 @@ require (
 	github.com/antihax/optional v1.0.0
 	github.com/aws/aws-sdk-go v1.46.4
 	github.com/docker/docker v24.0.5+incompatible
-	github.com/harness/harness-go-sdk v0.4.30
+	github.com/harness/harness-go-sdk v0.4.31
 	github.com/harness/harness-openapi-go-client v0.0.21
 	github.com/hashicorp/go-cleanhttp v0.5.2
 	github.com/hashicorp/go-cty v1.4.1-0.20200414143053-d3edf31b6320
