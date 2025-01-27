@@ -45,6 +45,26 @@ data "harness_platform_connector_jdbc" "example" {
 
 Read-Only:
 
+- `auth_type` (String)
+- `password_ref` (String)
+- `service_account` (List of Object) (see [below for nested schema](#nestedobjatt--credentials--service_account))
+- `username` (String)
+- `username_password` (List of Object) (see [below for nested schema](#nestedobjatt--credentials--username_password))
+- `username_ref` (String)
+
+<a id="nestedobjatt--credentials--service_account"></a>
+### Nested Schema for `credentials.service_account`
+
+Read-Only:
+
+- `token_ref` (String)
+
+
+<a id="nestedobjatt--credentials--username_password"></a>
+### Nested Schema for `credentials.username_password`
+
+Read-Only:
+
 - `password_ref` (String)
 - `username` (String)
 - `username_ref` (String)

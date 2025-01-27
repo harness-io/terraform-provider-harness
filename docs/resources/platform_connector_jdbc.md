@@ -21,7 +21,69 @@ resource "harness_platform_connector_jdbc" "test" {
   url                = "jdbc:sqlserver://1.2.3;trustServerCertificate=true"
   delegate_selectors = ["harness-delegate"]
   credentials {
+    auth_type = "ServiceAccount"
+    service_account {
+      token_ref = "account.secret_id"
+    }
+  }
+}
+
+resource "harness_platform_connector_jdbc" "test" {
+  identifier         = "identifer"
+  name               = "name"
+  description        = "test"
+  tags               = ["foo:bar"]
+  url                = "jdbc:sqlserver://1.2.3;trustServerCertificate=true"
+  delegate_selectors = ["harness-delegate"]
+  credentials {
+    auth_type = "UsernamePassword"
+    username_password {
+      username     = "admin"
+      password_ref = "account.secret_id"
+    }
+  }
+}
+
+resource "harness_platform_connector_jdbc" "test" {
+  identifier         = "identifer"
+  name               = "name"
+  description        = "test"
+  tags               = ["foo:bar"]
+  url                = "jdbc:sqlserver://1.2.3;trustServerCertificate=true"
+  delegate_selectors = ["harness-delegate"]
+  credentials {
+    auth_type = "UsernamePassword"
+    username_password {
+      username_ref = "account.user_ref"
+      password_ref = "account.secret_id"
+    }
+  }
+}
+
+resource "harness_platform_connector_jdbc" "test" {
+  identifier         = "identifer"
+  name               = "name"
+  description        = "test"
+  tags               = ["foo:bar"]
+  url                = "jdbc:sqlserver://1.2.3;trustServerCertificate=true"
+  delegate_selectors = ["harness-delegate"]
+  credentials {
+    auth_type    = "UsernamePassword"
     username     = "admin"
+    password_ref = "account.secret_id"
+  }
+}
+
+resource "harness_platform_connector_jdbc" "test" {
+  identifier         = "identifer"
+  name               = "name"
+  description        = "test"
+  tags               = ["foo:bar"]
+  url                = "jdbc:sqlserver://1.2.3;trustServerCertificate=true"
+  delegate_selectors = ["harness-delegate"]
+  credentials {
+    auth_type    = "UsernamePassword"
+    username_ref = "account.user_ref"
     password_ref = "account.secret_id"
   }
 }
@@ -52,14 +114,34 @@ resource "harness_platform_connector_jdbc" "test" {
 <a id="nestedblock--credentials"></a>
 ### Nested Schema for `credentials`
 
+Optional:
+
+- `auth_type` (String) Authentication types for JDBC connector
+- `password_ref` (String) The reference to the Harness secret containing the password to use for the database server. To reference a secret at the organization scope, prefix 'org' to the expression: org.{identifier}. To reference a secret at the account scope, prefix 'account` to the expression: account.{identifier}.
+- `service_account` (Block List, Max: 1) Authenticate using service account. (see [below for nested schema](#nestedblock--credentials--service_account))
+- `username` (String) The username to use for the database server.
+- `username_password` (Block List, Max: 1) Authenticate using username password. (see [below for nested schema](#nestedblock--credentials--username_password))
+- `username_ref` (String) The reference to the Harness secret containing the username to use for the database server. To reference a secret at the organization scope, prefix 'org' to the expression: org.{identifier}. To reference a secret at the account scope, prefix 'account` to the expression: account.{identifier}.
+
+<a id="nestedblock--credentials--service_account"></a>
+### Nested Schema for `credentials.service_account`
+
 Required:
 
-- `password_ref` (String) The reference to the Harness secret containing the password to use for the database server. To reference a secret at the organization scope, prefix 'org' to the expression: org.{identifier}. To reference a secret at the account scope, prefix 'account` to the expression: account.{identifier}.
+- `token_ref` (String) Reference to a secret containing the token to use for authentication. To reference a secret at the organization scope, prefix 'org' to the expression: org.{identifier}. To reference a secret at the account scope, prefix 'account` to the expression: account.{identifier}.
+
+
+<a id="nestedblock--credentials--username_password"></a>
+### Nested Schema for `credentials.username_password`
+
+Required:
+
+- `password_ref` (String) Reference to a secret containing the password to use for authentication. To reference a secret at the organization scope, prefix 'org' to the expression: org.{identifier}. To reference a secret at the account scope, prefix 'account` to the expression: account.{identifier}.
 
 Optional:
 
-- `username` (String) The username to use for the database server.
-- `username_ref` (String) The reference to the Harness secret containing the username to use for the database server. To reference a secret at the organization scope, prefix 'org' to the expression: org.{identifier}. To reference a secret at the account scope, prefix 'account` to the expression: account.{identifier}.
+- `username` (String) Username to use for authentication.
+- `username_ref` (String) Reference to a secret containing the username to use for authentication. To reference a secret at the organization scope, prefix 'org' to the expression: org.{identifier}. To reference a secret at the account scope, prefix 'account` to the expression: account.{identifier}.
 
 ## Import
 
