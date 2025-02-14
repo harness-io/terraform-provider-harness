@@ -39,6 +39,7 @@ resource "harness_platform_connector_vault" "aws_auth" {
   use_vault_agent                   = false
   delegate_selectors                = ["harness-delegate"]
   vault_url                         = "https://vault_url.com"
+  use_jwt_auth                      = false
 }
 
 resource "harness_platform_connector_vault" "app_role" {
@@ -63,6 +64,7 @@ resource "harness_platform_connector_vault" "app_role" {
   renew_app_role_token              = true
   delegate_selectors                = ["harness-delegate"]
   vault_url                         = "https://vault_url.com"
+  use_jwt_auth                      = false
 }
 
 resource "harness_platform_connector_vault" "k8s_auth" {
@@ -90,6 +92,7 @@ resource "harness_platform_connector_vault" "k8s_auth" {
   vault_aws_iam_role                = "vault_aws_iam_role"
   delegate_selectors                = ["harness-delegate"]
   vault_url                         = "https://vault_url.com"
+  use_jwt_auth                      = false
 }
 
 resource "harness_platform_connector_vault" "vault_agent" {
@@ -114,8 +117,8 @@ resource "harness_platform_connector_vault" "vault_agent" {
   sink_path                         = "sink_path"
   delegate_selectors                = ["harness-delegate"]
   vault_url                         = "https://vault_url.com"
+  use_jwt_auth                      = false
 }
-
 
 
 resource "harness_platform_connector_vault" "token" {
@@ -137,6 +140,33 @@ resource "harness_platform_connector_vault" "token" {
   use_aws_iam                       = false
   use_k8s_auth                      = false
   vault_url                         = "https://vault_url.com"
+  use_jwt_auth                      = false
+}
+
+resource "harness_platform_connector_vault" "jwt" {
+  identifier  = "identifier"
+  name        = "name"
+  description = "test"
+  tags        = ["foo:bar"]
+
+  base_path                         = "base_path"
+  access_type                       = "JWT"
+  default                           = false
+  read_only                         = true
+  renewal_interval_minutes          = 60
+  secret_engine_manually_configured = true
+  secret_engine_name                = "secret_engine_name"
+  secret_engine_version             = 2
+  use_aws_iam                       = false
+  use_k8s_auth                      = false
+  use_vault_agent                   = false
+  renew_app_role_token              = false
+  delegate_selectors                = ["harness-delegate"]
+  vault_url                         = "https://vault_url.com"
+  use_jwt_auth                      = true
+  vault_jwt_auth_role               = "vault_jwt_auth_role"
+  vault_jwt_auth_path               = "vault_jwt_auth_path"
+  execute_on_delegate               = false
 }
 ```
 
@@ -181,6 +211,10 @@ resource "harness_platform_connector_vault" "token" {
 - `vault_aws_iam_role` (String) The Vault role defined to bind to aws iam account/role being accessed.
 - `vault_k8s_auth_role` (String) The role where K8s Auth will happen.
 - `xvault_aws_iam_server_id` (String) The AWS IAM Header Server ID that has been configured for this AWS IAM instance.
+- `use_jwt_auth` (Boolean) Boolean value to indicate if JWT is used for authentication.
+- `vault_jwt_auth_role` (String) The Vault role defined with JWT auth type for accessing Vault as per policies binded.
+- `vault_jwt_auth_path` (String) Custom path at with JWT auth in enabled for Vault.
+- `execute_on_delegate` (Boolean) Execute on delegate or not.
 
 ### Read-Only
 

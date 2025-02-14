@@ -67,5 +67,9 @@ data "harness_platform_connector_vault" "example" {
 - `vault_k8s_auth_role` (String) The role where K8s auth will happen.
 - `vault_url` (String) URL of the HashiCorp Vault.
 - `xvault_aws_iam_server_id` (String) The AWS IAM Header Server ID that has been configured for this AWS IAM instance.
+- `use_jwt_auth` (Boolean) Boolean value to indicate if JWT is used for authentication.
+- `vault_jwt_auth_role` (String) The Vault role defined with JWT auth type for accessing Vault as per policies binded.
+- `vault_jwt_auth_path` (String) Custom path at with JWT auth in enabled for Vault.
+- `execute_on_delegate` (Boolean) Execute on delegate or not.
 
 

@@ -40,6 +40,7 @@ func createConnectorVault_app_role(id string, name string, vault_secret string) 
 		use_vault_agent = false
 		delegate_selectors = ["harness-delegate"]
 		vault_url = "https://vaultqa.harness.io"
+		use_jwt_auth = false
 
 		depends_on = [time_sleep.wait_8_seconds]
 	}
